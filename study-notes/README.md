@@ -1,5 +1,7 @@
 学習内容メモ
 
+⭐️2026/02/02
+
 Django ORM
 Pythonで書いたコードを、DjangoがSQLに翻訳して
 データベースを操作してくれる仕組み
@@ -28,3 +30,36 @@ INSTALLED_APPS は「このプロジェクトで使うアプリ一覧」
 - models を書いても無視される
 - makemigrations しても検出されない
 - admin にも出ない
+
+⭐️2026/02/03
+URLは仕様変更が一番起きやすいため、Djangoでは「変更されやすいもの（URL）」
+を「1ファイルに隔離」する。
+
+URLを直接書かかずに、名前で指定する
+urls.py で「URLの実体」と「名前」を1回だけ定義すると、
+その名前をプロジェクト中どこからでも再利用できる
+
+---
+
+📂polls/urls.py
+
+path("<int:pk>/", views.DetailView.as_view(), name="detail")
+
+<int:pk>/　実際のURL構造
+name="detail"　意味（名前）
+
+---
+
+URLの名前を再利用する例
+
+① テンプレート
+<a href="{% url 'polls:detail' question.id %}">
+
+② views（Python）
+reverse("polls:detail", args=(question.id,))
+
+③ redirect
+return redirect("polls:detail", pk=question.id)
+
+コメント
+Reactのコンポーネント設計みたい
