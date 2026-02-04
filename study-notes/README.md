@@ -63,3 +63,134 @@ return redirect("polls:detail", pk=question.id)
 
 コメント
 Reactのコンポーネント設計みたい
+
+---
+
+⭐️2026/02/04
+
+【各ファイルの役割】
+
+📂manage.py
+・Djangoを操作する司令塔
+
+例：
+python manage.py runserver
+python manage.py migrate
+python manage.py createsuperuser
+
+📂db.sqlite3
+・DB本体
+・設計図と履歴をもとに、実際に作られた「実体（箱）」
+・本チュートリアルでは、Question や Choice のデータが入ってる
+
+イメージ図
+
+1. 設計図を書く: models.py
+2. 履歴書を作る: python manage.py makemigrations → migrations/XXXX.py ができる
+3. 箱に反映する: python manage.py migrate → db.sqlite3 の中身が更新される
+
+📂django_tutorial
+・アプリケーション共通の設定
+
+django_tutorial/
+├── settings.py
+├── urls.py
+├── asgi.py
+├── wsgi.py
+
+📂settings.py
+・Django 全体の設定ファイル
+→　DB設定
+→　テンプレート設定
+→　セキュリティ設定
+
+📂urls.py（プロジェクト側）
+・「このURLは、どのアプリに渡すか」を決める
+
+例：
+path("polls/", include("polls.urls"))
+/polls/ → polls アプリに渡す
+
+📂asgi.py / wsgi.py
+・本番環境で使用するため、いまは使わない
+
+📂polls/
+・アプリケーション本体
+
+polls/
+├── models.py
+├── views.py
+├── urls.py
+├── templates/
+├── admin.py
+└── migrations/
+
+📂models.py
+・データの設計図
+
+例：
+class Question(models.Model):
+
+→ DBのテーブル構造
+→ DjangoがSQLを書いてくれる
+
+📂views.py
+・処理の中核になる部分
+
+役割
+・DBからデータ取得
+・POST処理
+・テンプレートに渡す
+
+📂urls.py（polls 側）
+・URLと view の対応表
+
+"" → 一覧
+"<pk>/" → 詳細
+"vote/" → 処理
+"results/" → 結果
+
+📂templates/polls/
+・画面（HTML）
+
+templates/polls/
+├── index.html
+├── detail.html
+└── results.html
+
+📂admin.py
+・Django 管理画面の設定
+
+→ /admin/でDBをGUIで操作できる
+
+【実行時の流れ】
+
+ブラウザ
+↓
+django_tutorial/urls.py
+↓
+polls/urls.py
+↓
+views.py
+↓
+models.py（必要なら）
+↓
+templates/
+↓
+HTMLレスポンス
+
+【汎用ビュー】
+汎用ビューとは、よくある画面の処理を、Djangoがあらかじめ用意してくれていること
+
+⭕️使うとき
+・一覧表示
+・詳細表示
+・結果表示
+・CRUD画面
+
+❌使わないとき
+・複雑な業務ロジック
+・POST処理
+
+表示系（GET）は汎用ビュー
+処理系（POST/ロジック）は自分で書く
