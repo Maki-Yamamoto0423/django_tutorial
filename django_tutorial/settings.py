@@ -31,7 +31,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'polls.apps.PollsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
+    'polls',          # 既存アプリ
+    'django_polls',   # 新しいパッケージ
 ]
 
 MIDDLEWARE = [

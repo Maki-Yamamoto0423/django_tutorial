@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=77.0.3"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "django-polls"
+version = "0.1"
+description = "A Django app to conduct web-based polls."
+readme = "README.rst"
+license = "BSD-3-Clause"
+requires-python = ">=3.12"
+dependencies = [
+    "django>=4.0"
+]

@@ -1,0 +1,21 @@
+============
+django-polls
+============
+
+django-polls is a Django app to conduct web-based polls.
+
+Quick start
+-----------
+
+1. Add "polls" to your INSTALLED_APPS setting:
+   INSTALLED_APPS = [
+       ...,
+       "django_polls",
+   ]
+
+2. Include the polls URLconf:
+   path("polls/", include("django_polls.urls")),
+
+3. Run `python manage.py migrate`.
+
+4. Start the server and visit `/polls/`.
